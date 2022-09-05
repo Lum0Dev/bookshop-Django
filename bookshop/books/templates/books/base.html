@@ -1,0 +1,86 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>{{ title }}</title>
+    <link rel="shortcut icon" href="{% static 'books/images/main.ico' %}" type="image/x-icon"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="{% static 'books/css/styles.css' %}">
+
+    <!-- CSS only -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
+</head>
+
+<body>
+    <!-- Меню -->
+    <header class="p-3">
+        <div class="container">
+        <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+            <a href="{% url 'home' %}" class="d-flex align-items-center mb-2 mb-lg-0">
+                <img src="{% static 'books/images/logo.ico' %}" alt="Logo">
+            </a>
+            
+            {% block mainmenu %}
+            <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+                {% for m in menu %}
+                {% if not forloop.last %}
+                <li><a href="{% url m.url_name %}" class="nav-link px-2 text-white">{{m.title}}</a></li>
+                {% endif %}
+                {% endfor %}
+            </ul>
+            
+    
+            <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" role="search">
+            <input type="search" class="form-control form-control-dark text-bg-dark" placeholder="Поиск книг..." aria-label="Search">
+            </form>
+    
+            <div class="text-end">
+                {% for m in menu %}
+                {% if forloop.last %}
+                <button type="button" class="btn btn-outline-light me-2">
+                    <a href="{% url m.url_name %}" class="nav-link">{{m.title}}</a>
+                </button>
+                {% endif %}
+                {% endfor %}
+                <button type="button" class="btn btn-warning">Регистрация</button>
+            </div>
+            {% endblock mainmenu %}
+        </div>
+        </div>
+    </header>
+    <!-- Конец меню -->
+
+    {% block content %}
+    {% endblock %}
+
+    <!-- Footer -->
+    <div id="footer" class="container-fluid">
+        <footer class="py-3">
+            <ul class="nav justify-content-center border-bottom pb-3 mb-3">
+                {% if cat_selected == 0 %}
+                <li class="nav-item px-2 text-muted">Все категории</li>
+                {% else %}
+                <li class="nav-item"><a href="{% url 'catalog' %}" class="nav-link px-2 text-white">Все категории</a></li>
+                {% endif %}
+
+                {% for c in cats %}
+                    {% if c.pk == cat_selected %}
+                    <li class="nav-item px-2 text-muted">{{c.name}}</li>
+                    {% else %}
+                    <li class="nav-item"><a href="{{c.get_absolute_url}}" class="nav-link px-2 text-white">{{c.name}}</a></li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+            <p class="text-center text-muted">© 2022 Sklad Company, Inc</p>
+        </footer>
+    </div>
+    <!-- Конец footer'а -->
+
+    <!-- JavaScript Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous"></script>
+
+</body>
+</html>

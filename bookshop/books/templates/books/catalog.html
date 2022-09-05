@@ -1,0 +1,38 @@
+{% extends 'books/base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="album py-5 bg-light">
+    <div class="container">
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5 g-4">
+            {% for p in products %}
+            <div class="col">
+                <div class="card shadow-sm h-100">
+                    <a href="{{p.get_absolute_url}}">
+                        {% if p.photo %}
+                        <img src="{{p.photo.url}}" class="d-block w-100" alt="image">
+                        {% endif %}
+                    </a>
+
+                    <div class="card-body">
+                        <a href="{{p.get_absolute_url}}">
+                            <h5 class="card-title">{{p.title}}</h5>
+                        </a>
+                        <p class="card-text">{{p.author}}</p>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div class="btn-group">
+                                <a href="{{p.get_absolute_url}}">
+                                    <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
+                                </a>                               
+                                <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
+                            </div>
+                            <h6>{{p.price}} руб.</h6>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}

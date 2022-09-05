@@ -1,0 +1,47 @@
+header.p-3 {
+    background-color: #30343F;
+}
+
+button.btn.btn-warning {
+    background-color: #a7bed3;
+    border-color: #a7bed3;
+}
+
+button.btn.btn-warning:hover {
+    background-color: #c6e2e9;
+}
+
+img {
+    max-width: 363px;
+    max-height: 561px;
+    display: block;
+    margin: auto;
+}
+
+div#footer {
+    margin-top: 15px;
+    background-color: #30343F;
+}
+
+h2#top {
+    margin-top: 15px;
+    margin-bottom: 15px;
+    margin-left: 136px;
+}
+
+h2#new {
+    margin: 15px;
+    margin-left: 0px;
+}
+
+div#container_top {
+    margin-left: 30px;
+}
+
+button#next {
+    right: 50px;
+}
+
+button#previous {
+    left: 50px;
+}
