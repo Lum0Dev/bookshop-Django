@@ -1,9 +1,11 @@
 /venv
 /bookshop/db.sqlite3
-/bookshop/books/static/books/images/m*
+/bookshop/books/static/books/images/main.ico
 /bookshop/books/static/books/images/logo_2.ico
 /bookshop/books/migrations
 /bookshop/books/__pycache__
 /bookshop/books/templates/books/111.html
 /bookshop/bookshop/__pycache__
 /bookshop/media
+/bookshop/books/templatetags/__pycache__
+/bookshop/books/templatetags/__init__.py

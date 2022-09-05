@@ -1,4 +1,6 @@
 {% load static %}
+{% load books_tags %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -23,6 +25,7 @@
             </a>
             
             {% block mainmenu %}
+            {% get_menu as menu %}
             <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
                 {% for m in menu %}
                 {% if not forloop.last %}
@@ -65,7 +68,8 @@
                 <li class="nav-item"><a href="{% url 'catalog' %}" class="nav-link px-2 text-white">Все категории</a></li>
                 {% endif %}
 
-                {% for c in cats %}
+                {% get_cats 'name' as categories %}
+                {% for c in categories %}
                     {% if c.pk == cat_selected %}
                     <li class="nav-item px-2 text-muted">{{c.name}}</li>
                     {% else %}
