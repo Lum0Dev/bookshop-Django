@@ -30,8 +30,8 @@ def about(request):
 def login(request):
     return HttpResponse(f'<h1>Авторизация</h1>')
 
-def show_product(request, product_id):
-    product = get_object_or_404(Books, pk=product_id)
+def show_product(request, product_slug):
+    product = get_object_or_404(Books, slug=product_slug)
     context = {
         'product': product,
         'title': product.title,
@@ -40,8 +40,9 @@ def show_product(request, product_id):
 
     return render(request, 'books/product.html', context=context)
 
-def show_category(request, cat_id):
-    products = Books.objects.filter(cat_id=cat_id)
+def show_category(request, cat_slug):
+    cat = Category.objects.get(slug=cat_slug)
+    products = Books.objects.filter(cat_id=cat.id)
 
     if len(products) == 0:
         raise Http404()
@@ -49,7 +50,7 @@ def show_category(request, cat_id):
     context = {
     'products': products,
     'title': 'Отображение по категориям',
-    'cat_selected': cat_id
+    'cat_selected': cat.id
     }
 
     return render(request, 'books/catalog.html', context=context)
