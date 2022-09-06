@@ -45,3 +45,7 @@ button#next {
 button#previous {
     left: 50px;
 }
+
+div#i {
+    padding: 0px;
+}

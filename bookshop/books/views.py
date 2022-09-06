@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse, HttpResponseNotFound, Http404
 
 from .models import *
@@ -31,7 +31,14 @@ def login(request):
     return HttpResponse(f'<h1>Авторизация</h1>')
 
 def show_product(request, product_id):
-    return HttpResponse(f'<h1>Продукт: {product_id}</h1>')
+    product = get_object_or_404(Books, pk=product_id)
+    context = {
+        'product': product,
+        'title': product.title,
+        'cat_selected': product.cat_id
+    }
+
+    return render(request, 'books/product.html', context=context)
 
 def show_category(request, cat_id):
     products = Books.objects.filter(cat_id=cat_id)

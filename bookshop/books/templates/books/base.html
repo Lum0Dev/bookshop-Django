@@ -68,7 +68,7 @@
                 <li class="nav-item"><a href="{% url 'catalog' %}" class="nav-link px-2 text-white">Все категории</a></li>
                 {% endif %}
 
-                {% get_cats 'name' as categories %}
+                {% get_cats '-name' as categories %}
                 {% for c in categories %}
                     {% if c.pk == cat_selected %}
                     <li class="nav-item px-2 text-muted">{{c.name}}</li>

@@ -1,5 +1,4 @@
 {% extends 'books/base.html' %}
-{% load static %}
 
 {% block content %}
 <div class="album py-5 bg-light">
@@ -15,7 +14,7 @@
                     </a>
 
                     <div class="card-body">
-                        <a href="{{p.get_absolute_url}}">
+                        <a href="{{p.get_absolute_url}}" class="text-decoration-none text-reset">
                             <h5 class="card-title">{{p.title}}</h5>
                         </a>
                         <p class="card-text">{{p.author}}</p>

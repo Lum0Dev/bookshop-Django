@@ -3,11 +3,12 @@ from django.contrib import admin
 from .models import *
 
 class BooksAdmin(admin.ModelAdmin):
-    list_display = ('id', 'title', 'price', 'author', 'cat', 'photo', 'time_create', 'is_published')
+    list_display = ('id', 'title', 'title_eng', 'price', 'sale', 'author',
+        'cat', 'photo', 'time_create', 'is_published')
     list_display_links = ('id', 'title')
     search_fields = ('title', 'author', 'content')
     list_editable = ('is_published',)
-    list_filter = ('is_published', 'time_create')
+    list_filter = ('is_published', 'time_create', 'sale')
 
 class CategoryAdmin(admin.ModelAdmin):
     list_display = ('id', 'name')
