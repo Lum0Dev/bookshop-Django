@@ -1,28 +1,36 @@
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse, HttpResponseNotFound, Http404
+from django.views.generic import ListView, DetailView
 
 from .models import *
 
 
-def index(request):
-    products = Books.objects.all()
-    context = {
-        'products': products,
-        'title': 'Главная страница',
-        'cat_selected': 0
-    }
+class ShopHome(ListView):
+    model = Books
+    template_name = 'books/index.html'
+    context_object_name = 'products'
 
-    return render(request, 'books/index.html', context=context)
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Главная страница'
+        return context
 
-def catalog(request):
-    products = Books.objects.all()
-    context = {
-        'products': products,
-        'title': 'Каталог',
-        'cat_selected': 0
-    }
+    def get_queryset(self):
+        return Books.objects.filter(is_published=True)
 
-    return render(request, 'books/catalog.html', context=context)
+class BooksCatalog(ListView):
+    model = Books
+    template_name = 'books/catalog.html'
+    context_object_name = 'products'
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Каталог'
+        context['cat_selected'] = 0
+        return context
+
+    def get_queryset(self):
+        return Books.objects.filter(is_published=True)
 
 def about(request):
     return render(request, 'books/about.html', {'title': 'О магазине'})
@@ -30,30 +38,32 @@ def about(request):
 def login(request):
     return HttpResponse(f'<h1>Авторизация</h1>')
 
-def show_product(request, product_slug):
-    product = get_object_or_404(Books, slug=product_slug)
-    context = {
-        'product': product,
-        'title': product.title,
-        'cat_selected': product.cat_id
-    }
+class ShowProduct(DetailView):
+    model = Books
+    template_name = 'books/product.html'
+    slug_url_kwarg = 'product_slug'
+    context_object_name = 'product'
 
-    return render(request, 'books/product.html', context=context)
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = context['product']
+        context['cat_selected'] = context['product'].cat_id
+        return context
 
-def show_category(request, cat_slug):
-    cat = Category.objects.get(slug=cat_slug)
-    products = Books.objects.filter(cat_id=cat.id)
+class BooksCategory(ListView):
+    model = Books
+    template_name = 'books/catalog.html'
+    context_object_name = 'products'
+    allow_empty = False
 
-    if len(products) == 0:
-        raise Http404()
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = str(context['products'][0].cat)  
+        context['cat_selected'] = context['products'][0].cat_id
+        return context
 
-    context = {
-    'products': products,
-    'title': 'Отображение по категориям',
-    'cat_selected': cat.id
-    }
-
-    return render(request, 'books/catalog.html', context=context)
+    def get_queryset(self):
+        return Books.objects.filter(cat__slug=self.kwargs['cat_slug'], is_published=True)
 
 def pageNotFound(request, exception):
     return HttpResponseNotFound('<h1>Страница не найдена</h1>')
