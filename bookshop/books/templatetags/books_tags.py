@@ -20,3 +20,12 @@ def get_menu():
     ]
 
     return menu
+
+@register.simple_tag(name='get_img')
+def get_images(group=None):
+    if not group:
+        return Books.objects.order_by('pk').filter(is_published=True)[:3]
+    elif group == 'first':
+        return Books.objects.order_by('-pk').filter(is_published=True)[:4]
+    elif group == 'second':
+        return Books.objects.order_by('-pk').filter(is_published=True)[4:8]
