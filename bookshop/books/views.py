@@ -30,7 +30,7 @@ class BooksCatalog(DataMixin, ListView):
         return dict(list(context.items()) + list(c_def.items()))
 
     def get_queryset(self):
-        return Books.objects.filter(is_published=True)
+        return Books.objects.filter(is_published=True).select_related('author')
 
 def about(request):
     return render(request, 'books/about.html', {'title': 'О магазине'})
@@ -60,7 +60,8 @@ class BooksCategory(DataMixin, ListView):
         return dict(list(context.items()) + list(c_def.items()))
 
     def get_queryset(self):
-        return Books.objects.filter(cat__slug=self.kwargs['cat_slug'], is_published=True)
+        return Books.objects.filter(cat__slug=self.kwargs['cat_slug'], 
+            is_published=True).select_related('author')
 
 class RegisterUser(CreateView):
     form_class = RegisterUserForm
