@@ -49,3 +49,18 @@ button#previous {
 div#image_col {
     padding: 0px;
 }
+
+form#form-signin {
+    width: 100%;
+    max-width: 330px;
+    padding: 15px;
+    margin: auto;
+}
+
+ul.errorlist {
+    list-style: none;
+    padding-left: 0rem;
+    /* font-size: 15px; */
+    font-size: 0.9rem;
+    color: red;
+}

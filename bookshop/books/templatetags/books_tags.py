@@ -15,8 +15,7 @@ def get_menu():
     menu = [
     {'title': 'Главная', 'url_name': 'home'},
     {'title': 'Каталог', 'url_name': 'catalog'},
-    {'title': 'О магазине', 'url_name': 'about'},
-    {'title': 'Войти', 'url_name': 'login'}
+    {'title': 'О магазине', 'url_name': 'about'}
     ]
 
     return menu

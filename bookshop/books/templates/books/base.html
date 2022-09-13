@@ -28,9 +28,7 @@
             {% get_menu as menu %}
             <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
                 {% for m in menu %}
-                {% if not forloop.last %}
                 <li><a href="{% url m.url_name %}" class="nav-link px-2 text-white">{{m.title}}</a></li>
-                {% endif %}
                 {% endfor %}
             </ul>
             
@@ -38,16 +36,22 @@
             <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" role="search">
             <input type="search" class="form-control form-control-dark text-bg-dark" placeholder="Поиск книг..." aria-label="Search">
             </form>
-    
+            
             <div class="text-end">
-                {% for m in menu %}
-                {% if forloop.last %}
+                {% if request.user.is_authenticated %}
+                <button type="button" class="btn btn-outline-light me-2">{{user.username}}</button>
+                <button type="button" class="btn btn-outline-light me-2">Корзина</button>
+                <button type="button" class="btn btn-warning">
+                    <a href="{% url 'logout' %}" class="nav-link">Выйти</a>
+                </button>
+                {% else %}
                 <button type="button" class="btn btn-outline-light me-2">
-                    <a href="{% url m.url_name %}" class="nav-link">{{m.title}}</a>
+                    <a href="{% url 'login' %}" class="nav-link">Войти</a>
+                </button>
+                <button type="button" class="btn btn-warning">
+                    <a href="{% url 'register' %}" class="nav-link">Регистрация</a>
                 </button>
                 {% endif %}
-                {% endfor %}
-                <button type="button" class="btn btn-warning">Регистрация</button>
             </div>
             {% endblock mainmenu %}
         </div>
